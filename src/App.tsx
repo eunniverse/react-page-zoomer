@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {ImageTransitionProvider} from "./components/ImageTransitionProvider";
+import {ImageTransitionElement} from "./components/ImageTransitionElement";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: React.FC = () => {
+    const images = [
+        { src: "https://via.placeholder.com/150", alt: "Image 1" },
+        { src: "https://via.placeholder.com/150", alt: "Image 2" },
+        { src: "https://via.placeholder.com/150", alt: "Image 3" },
+    ];
+
+    return (
+        <ImageTransitionProvider>
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                {images.map((img, idx) => (
+                    <ImageTransitionElement
+                        key={idx}
+                        destinationContent={
+                            <div
+                                style={{
+                                    width: "100vw",
+                                    height: "100vh",
+                                    backgroundColor: "#000",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    color: "#fff",
+                                }}
+                            >
+                                <img src={img.src} alt={img.alt} style={{ maxWidth: "90%" }} />
+                                <p>Expanded View</p>
+                            </div>
+                        }
+                    >
+                        <img src={img.src} alt={img.alt} />
+                    </ImageTransitionElement>
+                ))}
+            </div>
+        </ImageTransitionProvider>
+    );
+};
 
 export default App;
